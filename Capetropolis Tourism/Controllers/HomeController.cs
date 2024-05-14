@@ -20,6 +20,21 @@ namespace Capetropolis_Tourism.Controllers
             return View();
         }
 
+        public ActionResult Hotels()
+        {
+            return View();
+        }
+
+        public ActionResult Meals()
+        {
+            return View();
+        }
+        
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
