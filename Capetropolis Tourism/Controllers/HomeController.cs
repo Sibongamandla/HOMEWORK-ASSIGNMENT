@@ -20,10 +20,6 @@ namespace Capetropolis_Tourism.Controllers
             return View();
         }
 
-        public ActionResult Hotels()
-        {
-            return View();
-        }
 
         public ActionResult Meals()
         {

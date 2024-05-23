@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "BookingConfirmation";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .confirmation-container {
+            margin-top: 50px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .booking-details {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 confirmation-container">
+                <h2 class="form-title">Booking Confirmation</h2>
+                <div class="booking-details">
+                    <p><strong>First Name:</strong><span id="firstName"></span></p>
+                    <p><strong>ID Type:</strong> <span id="idType"></span></p>
+                    <p><strong>Meal Preference:</strong> <span id="mealReq"></span></p>
+                    <p><strong>Room Type:</strong> <span id="roomType"></span></p>
+                    <p><strong>Price:</strong> $<span id="price"></span></p>
+                    <p><strong>Features:</strong> <span id="features"></span></p>
+                    <p><strong>Booking ID:</strong> <span id="bookingId"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function populateBookingDetails() {
+            const bookingId = getQueryParam('bookingId');
+            if (bookingId) {
+                const booking = JSON.parse(localStorage.getItem('booking_' + bookingId));
+                if (booking) {
+                    document.getElementById('idType').textContent = booking.idType;
+                    document.getElementById('mealReq').textContent = booking.mealReq;
+                    document.getElementById('roomType').textContent = booking.roomType;
+                    document.getElementById('price').textContent = booking.price;
+                    document.getElementById('features').textContent = booking.features;
+                    document.getElementById('bookingId').textContent = booking.bookingId;
+                }
+            }
+        }
+
+        window.onload = populateBookingDetails;
+    </script>
+</body>
+</html>
+
