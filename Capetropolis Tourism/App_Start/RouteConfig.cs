@@ -18,6 +18,12 @@ namespace Capetropolis_Tourism
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+            name: "Booking",
+            url: "Home/Booking/{hotel}",
+            defaults: new { controller = "Home", action = "Booking", hotel = UrlParameter.Optional }
+            );
         }
     }
 }

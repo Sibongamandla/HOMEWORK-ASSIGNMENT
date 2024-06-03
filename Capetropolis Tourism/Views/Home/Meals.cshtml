@@ -1,9 +1,73 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Meals";
 }
 
-<main>
-    <h2>Meals</h2>
-</main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
 
+        .card {
+            width: 45%; /* Increase card width */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            margin-bottom: 30px;
+        }
+
+
+        .card:hover {
+                transform: translateY(-10px);
+            }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.75rem; /* Increase title size */
+        }
+
+        .btn {
+            margin-top: 20px;
+            font-size: 1.25rem; /* Increase button font size */
+            padding: 10px 20px; /* Increase button padding */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Meals Management</h1>
+        <div class="card-container">
+            <div class="card">
+                <img src="~/Content/Images/register.png" class="card-img-top" alt="Register Image">
+                <div class="card-body">
+                    <h5 class="card-title">Register As A Meals Agent</h5>
+                    <p class="card-text">Sign up as a meals agent to provide catering services to our hotels.</p>
+                    <a href="@Url.Action("Register", "Meals")" class="btn btn-primary">Register Now</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="~/Content/Images/order.png" class="card-img-top" alt="Order Image">
+                <div class="card-body">
+                    <h5 class="card-title">Order Meal</h5>
+                    <p class="card-text">Order a meal from our registered meal agents for your stay.</p>
+                    <a href="@Url.Action("Order", "Orders")" class="btn btn-primary">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

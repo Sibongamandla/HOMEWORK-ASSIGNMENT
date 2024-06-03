@@ -1,0 +1,182 @@
+﻿@model List<Capetropolis_Tourism.Models.MealAgentModel>
+@{
+    ViewBag.Title = "Register Meal Agent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Register Meal Agent</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                @using (Html.BeginForm("Add", "Meals", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstOrDefault().FirstName)
+                        @Html.TextBoxFor(m => m.FirstOrDefault().FirstName, new { @class = "form-control", placeholder = "First Name", required = "required" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstOrDefault().Surname)
+                        @Html.TextBoxFor(m => m.FirstOrDefault().Surname, new { @class = "form-control", placeholder = "Surname", required = "required" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstOrDefault().Email)
+                        @Html.TextBoxFor(m => m.FirstOrDefault().Email, new { @class = "form-control", placeholder = "Email Address", type = "email", required = "required" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstOrDefault().Telephone)
+                        @Html.TextBoxFor(m => m.FirstOrDefault().Telephone, new { @class = "form-control", placeholder = "Telephone", type = "tel", required = "required" })
+                    </div>
+                    <div class="meal-service">
+                        <label>Meal Services:</label><br>
+                        @foreach (var service in Model.FirstOrDefault()?.AvailableMealServices ?? new List<string>())
+                        {
+                            <label>
+                                <input type="checkbox" name="MealService" value="@service" /> @service
+                            </label>
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Add</button>
+                }
+            </div>
+        </div>
+        <div class="actions text-center">
+            <button id="findBtn" class="btn btn-info">Find</button>
+            <button id="editBtn" class="btn btn-warning">Edit</button>
+            <button id="updateBtn" class="btn btn-success">Update</button>
+            <button id="deleteBtn" class="btn btn-danger">Delete</button>
+        </div>
+        <div class="search-container text-center mt-4">
+            <input type="text" id="searchBar" class="form-control" placeholder="Search Meal Agent">
+        </div>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Telephone</th>
+                        <th>Meal Services</th>
+                    </tr>
+                </thead>
+                <tbody id="mealAgentsTable">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var agent in Model)
+                        {
+                            <tr data-id="@agent.Id">
+                                <td>@agent.FirstName @agent.Surname</td>
+                                <td>@agent.Email</td>
+                                <td>@agent.Telephone</td>
+                                <td>@string.Join(", ", agent.MealService)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No meal agents found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function getSelectedRow() {
+                return $('#mealAgentsTable tr.selected');
+            }
+
+            function getCheckedServices() {
+                var services = [];
+                $('input[name="MealService"]:checked').each(function() {
+                    services.push($(this).val());
+                });
+                return services;
+            }
+
+            // Row selection
+            $('#mealAgentsTable').on('click', 'tr', function() {
+                $(this).addClass('selected').siblings().removeClass('selected');
+            });
+
+            // Find agent
+            $('#findBtn').click(function() {
+                var searchTerm = $('#searchBar').val();
+                window.location.href = '@Url.Action("Find", "Meals")?searchTerm=' + searchTerm;
+            });
+
+            // Edit agent
+            $('#editBtn').click(function() {
+                var selectedRow = getSelectedRow();
+                if (selectedRow.length > 0) {
+                    var agentId = selectedRow.data('id');
+                    $.post('@Url.Action("GetAgentById", "Meals")', { id: agentId }, function(data) {
+                        $('#Id').val(data.Id);
+                        $('#FirstName').val(data.FirstName);
+                        $('#Surname').val(data.Surname);
+                        $('#Email').val(data.Email);
+                        $('#Telephone').val(data.Telephone);
+                        $('input[name="MealService"]').each(function() {
+                            if (data.MealService.includes($(this).val())) {
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        });
+                    });
+                } else {
+                    alert('Please select an agent to edit.');
+                }
+            });
+
+            // Update agent
+            $('#updateBtn').click(function() {
+                var selectedRow = getSelectedRow();
+                if (selectedRow.length > 0) {
+                    var agentId = selectedRow.data('id');
+                    var updatedAgent = {
+                        Id: agentId,
+                        FirstName: $('#FirstName').val(),
+                        Surname: $('#Surname').val(),
+                        Email: $('#Email').val(),
+                        Telephone: $('#Telephone').val(),
+                        MealService: getCheckedServices()
+                    };
+                    $.post('@Url.Action("Update", "Meals")', updatedAgent, function() {
+                        location.reload();
+                    });
+                } else {
+                    alert('Please select an agent to update.');
+                }
+            });
+
+            // Delete agent
+            $('#deleteBtn').click(function() {
+                var selectedRow = getSelectedRow();
+                if (selectedRow.length > 0) {
+                    var agentId = selectedRow.data('id');
+                    $.post('@Url.Action("Delete", "Meals")', { id: agentId }, function() {
+                        location.reload();
+                    });
+                } else {
+                    alert('Please select an agent to delete.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
