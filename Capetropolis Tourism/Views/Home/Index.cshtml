@@ -2,145 +2,199 @@
     ViewBag.Title = "Home Page";
 }
 
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="path/to/bootstrap.css">
 
     <style>
-        p {
-            padding-top: 20px;
-            font-size: 13px;
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
         }
 
         h1 {
+            font-size: 2.5rem;
+            margin-top: 50px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
             margin-top: 50px;
         }
 
-        #button {
-            background-color: #373336;
-            padding: 10px 20px;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
+        p {
+            text-align: center;
+            font-size: 1rem;
         }
 
-            #button:hover {
+        #getStartedButton {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+            #getStartedButton:hover {
                 background-color: #555555;
             }
 
-        #button2 {
-            background-color: dimgrey;
-            padding: 10px 20px;
+        .hotel-button {
+            background-color: #6c757d;
+            color: #fff;
+            padding: 20px;
             border: none;
-            font-size: 12px;
+            font-size: 1.25rem;
             cursor: pointer;
+            text-align: center;
+            margin: 20px;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        .hotel-options {
+            text-align: center;
+            margin: 50px 0;
         }
 
-            #button2:hover {
-                background-color: grey;
+            .hotel-button:hover {
+                background-color: #343a40;
             }
 
-        /* Adjust image size */
+            .hotel-button img {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 10px;
+            }
+
+        .hotel-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .content-container {
+            padding: 50px 0;
+            text-align: center;
+        }
+
         .tourism-image {
             width: 100%;
             height: auto;
+            margin-top: 50px;
         }
 
-        /* Adjust spacing */
-        .content-container {
-            padding-top: 50px;
-            padding-bottom: 50px;
+        .main-heading {
+            position: relative;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
         }
+
+            .main-heading img {
+                width: 100%;
+                height: auto;
+            }
+
+        .main-heading-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+        }
+
+            .main-heading-content h1 {
+                font-size: 3rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .main-heading-content p {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
     </style>
 </head>
+
 <body>
-    <main>
-        <div class="container-fluid content-container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1>Booking your stay in Capetropolis</h1>
-                    <p>Secure a safe accommodation and a memorable <br /> 
-                    experience in our lodging facilities</p>
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary" id="button">Get Started</a>
-                </div>
-
-                <div class="col-md-6">
-                    <img src="~/Content/Images/lodging-pict.jpg" alt="Lodge" class="img-fluid">
-                </div>
-            </div>
-
-            <hr />
-
-            @*Use query parameters to pass the hotel information throug the URL when openning the bookings pages *@
-
-            <div class="row">
-                <div class="col-md-2 text-center">
-                    <div> <i class="bi bi-brightness-high"></i></div>
-                    <a href="@Url.Action("Bookings", "Pages", new { hotel = "CapeHoney" })" class="btn btn-primary" id="button2">CapeHoney</a>
-                    <p>
-                        We offer special complementry <br /> services like messages, games,<br />
-                        Gym, swimming pool, evening <br /> buffet, special party nights.
-                    </p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <div> <i class="bi bi-brightness-high"></i></div>
-                    <a href="@Url.Action("Bookings", "Pages", new { hotel = "CapeIvory" })" class="btn btn-primary" id="button2">CapeIvory</a>             <p>
-                        We offer special complementry <br /> services like messages, games,<br />
-                        Gym, swimming pool, evening <br /> buffet, special party nights.
-                    </p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <div> <i class="bi bi-brightness-high"></i></div>
-                    <a href="@Url.Action("Bookings", "Pages", new { hotel = "CapeSweet" })" class="btn btn-primary" id="button2">CapeSweet</a>
-                    <p>
-                        We offer special complementry <br /> services like messages, games,<br />
-                        Gym, swimming pool, evening <br /> buffet, special party nights.
-                    </p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <div> <i class="bi bi-brightness-high"></i></div>
-                    <a href="@Url.Action("Bookings", "Pages", new { hotel = "CapeHive" })" class="btn btn-primary" id="button2">CapeHive</a>
-                    <p>
-                        We offer special complementry <br /> services like messages, games,<br />
-                        Gym, swimming pool, evening <br /> buffet, special party nights.
-                    </p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <div> <i class="bi bi-brightness-high"></i></div>
-                    <a href="@Url.Action("Bookings", "Pages", new { hotel = "CapeCow" })" class="btn btn-primary" id="button2">CapeCow</a> <p>
-                        We offer special complementry <br /> services like messages, games,<br />
-                        Gym, swimming pool, evening <br /> buffet, special party nights.
-                    </p>
-                </div>
-            </div>
-            <br />
-
-
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Capetropolis Tourism</h2>
-                    <p>
-                        Welcome to Capetropolis. Our island will offer you comfort and pleasure, the kind that is rare to find elsewhere!
-                        <br><br>
-                        The attractions in our island include nature, a game reserve, historical sites and monuments, exquisite hotels and restaurants, shopping malls. Visit us to have a memorable experience.
-                    </p>
-                </div>
-
-                <div class="col-md-6">
-                    <img src="~/Content/Images/Tourism Image.jpg" alt="Tourism" class="img-fluid">
-                </div>
+    <div class="container mt-5">
+        <div class="main-heading">
+            <img src="~/Content/Images/lodging-pict.jpg" alt="Capetropolis Image">
+            <div class="main-heading-content">
+                <h1>Booking Your Stay in Capetropolis</h1>
+                <p>Secure a safe accommodation and memorable experience in our lodging facilities</p>
+                <button id="getStartedButton" onclick="enableHotelButtons()">Get Started</button>
             </div>
         </div>
-    </main>
+        <div class="hotel-options" id="hotelOptions" style="display: none;">
+            <div class="hotel-row">
+                <button id="capeHoneyBtn" class="hotel-button" onclick="location.href='@Url.Action("Bookings", "Booking", new { hotel = "CapeHoney" })'" disabled>
+                    <img src="~/Content/Images/CapeHoneyLogo.png" alt="CapeHoney">
+                    <div>CapeHoney</div>
+                    <p>Experience the sweetness of CapeHoney.</p>
+                </button>
+                <button id="capeIvoryBtn" class="hotel-button" onclick="location.href='@Url.Action("Bookings", "Booking", new { hotel = "CapeIvory" })'" disabled>
+                    <img src="~/Content/Images/CapeIvoryLogo.png" alt="CapeIvory">
+                    <div>CapeIvory</div>
+                    <p>Luxury and comfort at CapeIvory.</p>
+                </button>
+                <button id="capeSweetBtn" class="hotel-button" onclick="location.href='@Url.Action("Bookings", "Booking", new { hotel = "CapeSweet" })'" disabled>
+                    <img src="~/Content/Images/CapeSweetLogo.png" alt="CapeSweet">
+                    <div>CapeSweet</div>
+                    <p>Sweet stays at CapeSweet.</p>
+                </button>
+                <button id="capeHiveBtn" class="hotel-button" onclick="location.href='@Url.Action("Bookings", "Booking", new { hotel = "CapeHive" })'" disabled>
+                    <img src="~/Content/Images/CapeHiveLogo.png" alt="CapeHive">
+                    <div>CapeHive</div>
+                    <p>Buzzing with excitement at CapeHive.</p>
+                </button>
+                <button id="capeCowBtn" class="hotel-button" onclick="location.href='@Url.Action("Bookings", "Booking", new { hotel = "CapeCow" })'" disabled>
+                    <img src="~/Content/Images/CapeCowLogo.png" alt="CapeCow">
+                    <div>CapeCow</div>
+                    <p>Comfort and care at CapeCow.</p>
+                </button>
+            </div>
+        </div>
+        </div>
+        <div class="container content-container">
+            <h2>Capetropolis Tourism</h2>
+            <p>Welcome to Capetropolis, where adventure meets luxury. Our exclusive lodging facilities offer a range of amenities to make your stay unforgettable. From stunning views to top-notch services, explore Capetropolis with us!</p>
+            <img src="~/Content/Images/Tourism Image.jpg" alt="Tourism Image" class="tourism-image">
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+          
+            function enableHotelButtons() {
+                document.getElementById('hotelOptions').style.display = 'flex';
+                document.getElementById('capeHoneyBtn').disabled = false;
+                document.getElementById('capeIvoryBtn').disabled = false;
+                document.getElementById('capeSweetBtn').disabled = false;
+                document.getElementById('capeHiveBtn').disabled = false;
+                document.getElementById('capeCowBtn').disabled = false;
+            }
+           
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

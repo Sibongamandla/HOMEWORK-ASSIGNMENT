@@ -1,0 +1,101 @@
+﻿@model Capetropolis_Tourism.Models.MealOrderModel
+@{
+    ViewBag.Title = "Order Meal";
+    var mealAgents = ViewBag.MealAgents as List<Capetropolis_Tourism.Models.MealAgentModel>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ececec, #b3b3b3);
+            color: #343a40;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+            .table-container table {
+                width: 100%;
+                background: #fff;
+                padding: 10px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Meal</h1>
+
+        <div class="form-container">
+            @using (Html.BeginForm("Order", "Orders", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MealType)
+                    @Html.DropDownListFor(m => m.MealType, new SelectList(new[] { "Regular", "Vegan", "Halal", "Kosher", "Indian", "Gluten-free", "Keto", "Paleo" }), new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MealDetails)
+                    @Html.TextAreaFor(m => m.MealDetails, new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Hotel)
+                    @Html.DropDownListFor(m => m.Hotel, new SelectList(new[] { "Hotel 1", "Hotel 2", "Hotel 3", "Hotel 4", "Hotel 5" }), new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MealAgentID)
+                    @Html.DropDownListFor(m => m.MealAgentID, new SelectList(mealAgents, "Id", "FirstName"), new { @class = "form-control", required = "required" })
+                </div>
+                <button type="submit" class="btn btn-primary">Order Meal</button>
+            }
+        </div>
+
+        <div class="table-container">
+            <h3>Registered Meal Agents</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Surname</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var agent in mealAgents)
+                    {
+                        <tr>
+                            <td>@agent.FirstName</td>
+                            <td>@agent.Surname</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
